@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "energy-fundies"
+version = "0.1.0"
+description = ""
+authors = []
+packages = [{ include = "energy_fundies" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+

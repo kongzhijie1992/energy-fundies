@@ -1,0 +1,24 @@
+# Minimal demo zones (domain EIC codes) and their local timezones.
+# Domain codes: https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html#_domain_codes
+DE_LU:
+  domain: "10Y1001A1001A82H"
+  timezone: "Europe/Berlin"
+FR:
+  domain: "10YFR-RTE------C"
+  timezone: "Europe/Paris"
+NL:
+  domain: "10YNL----------L"
+  timezone: "Europe/Amsterdam"
+BE:
+  domain: "10YBE----------2"
+  timezone: "Europe/Brussels"
+DK1:
+  domain: "10YDK-1--------W"
+  timezone: "Europe/Copenhagen"
+AT:
+  domain: "10YAT-APG------L"
+  timezone: "Europe/Vienna"
+CH:
+  domain: "10YCH-SWISSGRIDZ"
+  timezone: "Europe/Zurich"
+

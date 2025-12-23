@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "euro-interconnector-pipeline"
+version = "0.1.0"
+description = "Ingest and transform ENTSO-E cross-border interconnector flows into clean hourly tables and simple features."
+authors = ["OpenAI Codex CLI"]
+readme = "README.md"
+packages = [{ include = "eicflows", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+entsoe-py = "^0.6.18"
+pandas = "^2.2.0"
+pyarrow = "^17.0.0"
+pydantic = "^2.7.0"
+pyyaml = "^6.0.1"
+typer = "^0.12.3"
+rich = "^13.7.1"
+python-dotenv = "^1.0.1"
+click = "<8.2"
+streamlit = "^1.39.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+ruff = "^0.6.0"
+
+[tool.poetry.scripts]
+eicflows = "eicflows.cli:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/eicflows/cli.py" = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-s"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
