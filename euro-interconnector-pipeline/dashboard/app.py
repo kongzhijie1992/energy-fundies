@@ -1,11 +1,18 @@
 from __future__ import annotations
 
+import sys
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+
+_SRC_DIR = Path(__file__).resolve().parents[1] / "src"
+if _SRC_DIR.exists():
+    src_str = str(_SRC_DIR)
+    if src_str not in sys.path:
+        sys.path.insert(0, src_str)
 
 from eicflows.config import load_config
 from eicflows.features import compute_congestion_proxy, compute_net_import
