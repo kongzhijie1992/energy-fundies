@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -43,6 +44,7 @@ def extract_border(
     end_utc: pd.Timestamp,
     raw_dir: Path,
 ) -> ExtractResult:
+    log = logging.getLogger("eicflows")
     start_utc = ensure_utc(start_utc)
     end_utc = ensure_utc(end_utc)
     raw_dir.mkdir(parents=True, exist_ok=True)
@@ -70,22 +72,34 @@ def extract_border(
             except Exception:
                 pass
 
-        if border.metric == Metric.physical_flow:
-            s = client.query_crossborder_physical_flows(
-                from_domain=from_domain,
-                to_domain=to_domain,
-                start_utc=chunk.start_utc,
-                end_utc=chunk.end_utc,
+        try:
+            if border.metric == Metric.physical_flow:
+                s = client.query_crossborder_physical_flows(
+                    from_domain=from_domain,
+                    to_domain=to_domain,
+                    start_utc=chunk.start_utc,
+                    end_utc=chunk.end_utc,
+                )
+            elif border.metric == Metric.scheduled_exchange:
+                s = client.query_scheduled_exchanges(
+                    from_domain=from_domain,
+                    to_domain=to_domain,
+                    start_utc=chunk.start_utc,
+                    end_utc=chunk.end_utc,
+                )
+            else:
+                raise ValueError(f"Unsupported metric: {border.metric}")
+        except Exception as exc:
+            log.warning(
+                "ENTSO-E returned no data for %s %s (%s -> %s) month=%s: %s",
+                border.border_id,
+                border.metric.value,
+                border.from_zone,
+                border.to_zone,
+                month,
+                exc,
             )
-        elif border.metric == Metric.scheduled_exchange:
-            s = client.query_scheduled_exchanges(
-                from_domain=from_domain,
-                to_domain=to_domain,
-                start_utc=chunk.start_utc,
-                end_utc=chunk.end_utc,
-            )
-        else:
-            raise ValueError(f"Unsupported metric: {border.metric}")
+            s = pd.Series(dtype="float64", index=pd.DatetimeIndex([], tz="UTC"))
 
         df = _series_to_frame(s)
         df["extracted_at_utc"] = extracted_at
