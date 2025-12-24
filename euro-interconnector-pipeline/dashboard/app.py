@@ -176,7 +176,7 @@ def main() -> None:
 
         st.divider()
         st.subheader("Filters")
-        metric = st.selectbox("Metric", ["physical_flow", "scheduled_exchange"], index=0)
+        metric = st.selectbox("Metric", ["physical_flow"], index=0)
         configured_borders = [b.border_id for b in cfg.borders if b.metric.value == metric]
         available_borders = _available_border_ids(
             _paths(project_root, data_dir).clean_dir,
