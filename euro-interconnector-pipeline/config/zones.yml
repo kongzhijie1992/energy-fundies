@@ -1,24 +1,185 @@
-# Minimal demo zones (domain EIC codes) and their local timezones.
-# Domain codes: https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html#_domain_codes
-DE_LU:
-  domain: "10Y1001A1001A82H"
-  timezone: "Europe/Berlin"
-FR:
-  domain: "10YFR-RTE------C"
-  timezone: "Europe/Paris"
-NL:
-  domain: "10YNL----------L"
-  timezone: "Europe/Amsterdam"
-BE:
-  domain: "10YBE----------2"
-  timezone: "Europe/Brussels"
-DK1:
-  domain: "10YDK-1--------W"
-  timezone: "Europe/Copenhagen"
+# Generated from entsoe-py entsoe.mappings.Area (domain/timezone)
+# Timestamp (UTC): 2025-12-24T12:13:46Z
+AL:
+  domain: 10YAL-KESH-----5
+  timezone: Europe/Tirane
 AT:
-  domain: "10YAT-APG------L"
-  timezone: "Europe/Vienna"
+  domain: 10YAT-APG------L
+  timezone: Europe/Vienna
+BA:
+  domain: 10YBA-JPCC-----D
+  timezone: Europe/Sarajevo
+BE:
+  domain: 10YBE----------2
+  timezone: Europe/Brussels
+BG:
+  domain: 10YCA-BULGARIA-R
+  timezone: Europe/Sofia
+BY:
+  domain: 10Y1001A1001A51S
+  timezone: Europe/Minsk
 CH:
-  domain: "10YCH-SWISSGRIDZ"
-  timezone: "Europe/Zurich"
-
+  domain: 10YCH-SWISSGRIDZ
+  timezone: Europe/Zurich
+CZ:
+  domain: 10YCZ-CEPS-----N
+  timezone: Europe/Prague
+DE_AT_LU:
+  domain: 10Y1001A1001A63L
+  timezone: Europe/Berlin
+DE_LU:
+  domain: 10Y1001A1001A82H
+  timezone: Europe/Berlin
+DK_1:
+  domain: 10YDK-1--------W
+  timezone: Europe/Copenhagen
+DK_2:
+  domain: 10YDK-2--------M
+  timezone: Europe/Copenhagen
+EE:
+  domain: 10Y1001A1001A39I
+  timezone: Europe/Tallinn
+ES:
+  domain: 10YES-REE------0
+  timezone: Europe/Madrid
+FI:
+  domain: 10YFI-1--------U
+  timezone: Europe/Helsinki
+FR:
+  domain: 10YFR-RTE------C
+  timezone: Europe/Paris
+GB:
+  domain: 10YGB----------A
+  timezone: Europe/London
+GR:
+  domain: 10YGR-HTSO-----Y
+  timezone: Europe/Athens
+HR:
+  domain: 10YHR-HEP------M
+  timezone: Europe/Zagreb
+HU:
+  domain: 10YHU-MAVIR----U
+  timezone: Europe/Budapest
+IE_SEM:
+  domain: 10Y1001A1001A59C
+  timezone: Europe/Dublin
+IT:
+  domain: 10YIT-GRTN-----B
+  timezone: Europe/Rome
+IT_BRNN:
+  domain: 10Y1001A1001A699
+  timezone: Europe/Rome
+IT_CALA:
+  domain: 10Y1001C--00096J
+  timezone: Europe/Rome
+IT_CNOR:
+  domain: 10Y1001A1001A70O
+  timezone: Europe/Rome
+IT_CSUD:
+  domain: 10Y1001A1001A71M
+  timezone: Europe/Rome
+IT_FOGN:
+  domain: 10Y1001A1001A72K
+  timezone: Europe/Rome
+IT_GR:
+  domain: 10Y1001A1001A66F
+  timezone: Europe/Rome
+IT_NORD:
+  domain: 10Y1001A1001A73I
+  timezone: Europe/Rome
+IT_NORD_AT:
+  domain: 10Y1001A1001A80L
+  timezone: Europe/Rome
+IT_NORD_CH:
+  domain: 10Y1001A1001A68B
+  timezone: Europe/Rome
+IT_NORD_FR:
+  domain: 10Y1001A1001A81J
+  timezone: Europe/Rome
+IT_ROSN:
+  domain: 10Y1001A1001A77A
+  timezone: Europe/Rome
+IT_SARD:
+  domain: 10Y1001A1001A74G
+  timezone: Europe/Rome
+IT_SICI:
+  domain: 10Y1001A1001A75E
+  timezone: Europe/Rome
+IT_SUD:
+  domain: 10Y1001A1001A788
+  timezone: Europe/Rome
+LT:
+  domain: 10YLT-1001A0008Q
+  timezone: Europe/Vilnius
+LV:
+  domain: 10YLV-1001A00074
+  timezone: Europe/Riga
+ME:
+  domain: 10YCS-CG-TSO---S
+  timezone: Europe/Podgorica
+MK:
+  domain: 10YMK-MEPSO----8
+  timezone: Europe/Skopje
+MT:
+  domain: 10Y1001A1001A93C
+  timezone: Europe/Malta
+NL:
+  domain: 10YNL----------L
+  timezone: Europe/Amsterdam
+NO_1:
+  domain: 10YNO-1--------2
+  timezone: Europe/Oslo
+NO_2:
+  domain: 10YNO-2--------T
+  timezone: Europe/Oslo
+NO_3:
+  domain: 10YNO-3--------J
+  timezone: Europe/Oslo
+NO_4:
+  domain: 10YNO-4--------9
+  timezone: Europe/Oslo
+NO_5:
+  domain: 10Y1001A1001A48H
+  timezone: Europe/Oslo
+PL:
+  domain: 10YPL-AREA-----S
+  timezone: Europe/Warsaw
+PT:
+  domain: 10YPT-REN------W
+  timezone: Europe/Lisbon
+RO:
+  domain: 10YRO-TEL------P
+  timezone: Europe/Bucharest
+RS:
+  domain: 10YCS-SERBIATSOV
+  timezone: Europe/Belgrade
+RU:
+  domain: 10Y1001A1001A49F
+  timezone: Europe/Moscow
+RU_KGD:
+  domain: 10Y1001A1001A50U
+  timezone: Europe/Kaliningrad
+SE_1:
+  domain: 10Y1001A1001A44P
+  timezone: Europe/Stockholm
+SE_2:
+  domain: 10Y1001A1001A45N
+  timezone: Europe/Stockholm
+SE_3:
+  domain: 10Y1001A1001A46L
+  timezone: Europe/Stockholm
+SE_4:
+  domain: 10Y1001A1001A47J
+  timezone: Europe/Stockholm
+SI:
+  domain: 10YSI-ELES-----O
+  timezone: Europe/Ljubljana
+SK:
+  domain: 10YSK-SEPS-----K
+  timezone: Europe/Bratislava
+TR:
+  domain: 10YTR-TEIAS----W
+  timezone: Europe/Istanbul
+UA:
+  domain: 10Y1001C--00003F
+  timezone: Europe/Kiev

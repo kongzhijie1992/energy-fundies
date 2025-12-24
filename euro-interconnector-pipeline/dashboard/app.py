@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 from __future__ import annotations
 
 import sys
@@ -48,6 +49,33 @@ def _to_range_utc(start: pd.Timestamp, end: pd.Timestamp) -> DateTimeRange:
     if end_utc <= start_utc:
         raise ValueError("End must be after start.")
     return DateTimeRange(start_utc=start_utc, end_utc=end_utc)
+
+
+def _iter_year_months(rng: DateTimeRange) -> list[tuple[int, int]]:
+    start = ensure_utc(rng.start_utc).normalize().replace(day=1)
+    end_inclusive = ensure_utc(rng.end_utc) - pd.Timedelta(nanoseconds=1)
+    end = end_inclusive.normalize().replace(day=1)
+
+    months: list[tuple[int, int]] = []
+    cursor = start
+    while cursor <= end:
+        months.append((int(cursor.year), int(cursor.month)))
+        cursor = (cursor + pd.offsets.MonthBegin(1)).tz_convert("UTC")
+    return months
+
+
+def _available_border_ids(clean_dir: Path, *, metric: str, rng: DateTimeRange) -> set[str]:
+    suffix = f"_{metric}.parquet"
+    out: set[str] = set()
+    for year, month in _iter_year_months(rng):
+        part_dir = clean_dir / f"year={year:04d}" / f"month={month:02d}"
+        if not part_dir.exists():
+            continue
+        for p in part_dir.glob(f"*{suffix}"):
+            name = p.name
+            if name.endswith(suffix):
+                out.add(name[: -len(suffix)])
+    return out
 
 
 @st.cache_data(show_spinner=False)
@@ -150,10 +178,18 @@ def main() -> None:
         st.subheader("Filters")
         metric = st.selectbox("Metric", ["physical_flow", "scheduled_exchange"], index=0)
         configured_borders = [b.border_id for b in cfg.borders if b.metric.value == metric]
+        available_borders = _available_border_ids(
+            _paths(project_root, data_dir).clean_dir,
+            metric=metric,
+            rng=rng,
+        )
+        default_borders = [b for b in configured_borders if b in available_borders]
+        if not default_borders:
+            default_borders = configured_borders
         selected_borders = st.multiselect(
             "Borders",
             options=configured_borders,
-            default=configured_borders[: min(4, len(configured_borders))],
+            default=default_borders[: min(4, len(default_borders))],
         )
         selected_zones = st.multiselect(
             "Zones", options=sorted(cfg.zones.keys()), default=["DE_LU", "FR"]

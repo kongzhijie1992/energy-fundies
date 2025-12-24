@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -56,6 +57,18 @@ def extract_border(
         month = chunk.start_utc.strftime("%Y-%m")
         out_path = _raw_path(raw_dir, border.metric, border.border_id, month)
         out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        use_raw_cache = os.getenv("EICFLOWS_USE_RAW_CACHE", "").strip() == "1"
+        if use_raw_cache and out_path.exists():
+            try:
+                cached = pd.read_parquet(out_path)
+                ts = pd.to_datetime(cached["timestamp_utc"], utc=True)
+                mw = pd.to_numeric(cached["mw"], errors="coerce").astype("float64")
+                s = pd.Series(mw.to_numpy(), index=ts)
+                monthly_series.append(s)
+                continue
+            except Exception:
+                pass
 
         if border.metric == Metric.physical_flow:
             s = client.query_crossborder_physical_flows(
