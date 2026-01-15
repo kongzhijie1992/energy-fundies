@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Ingest and transform ENTSO-E cross-border interconnector flows into clean hourly tables and simple features."
 authors = ["OpenAI Codex CLI"]
 readme = "README.md"
-packages = [{ include = "eicflows", from = "src" }]
+packages = [
+    { include = "eicflows", from = "src" },
+    { include = "fundie", from = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -25,6 +28,7 @@ ruff = "^0.6.0"
 
 [tool.poetry.scripts]
 eicflows = "eicflows.cli:main"
+fundie = "fundie.cli:main"
 
 [tool.ruff]
 line-length = 100

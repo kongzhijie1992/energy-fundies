@@ -16,6 +16,7 @@ env/
 .hypothesis/
 .tox/
 .nox/
+.fundie_cache/
 
 # Coverage
 .coverage
@@ -34,9 +35,9 @@ dist/
 !.env.example
 
 # Data outputs
-data/raw/
-data/clean/
-data/outputs/
+# data/raw/
+# data/clean/
+# data/outputs/
 
 # Notebooks
 .ipynb_checkpoints/

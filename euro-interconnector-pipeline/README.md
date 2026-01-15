@@ -119,3 +119,62 @@ poetry run streamlit run dashboard/app.py
 ```
 
 The dashboard reads from `data/clean/flows/` and `data/outputs/` and can compute net import / congestion proxy on-the-fly if outputs are missing.
+
+## FTR Pricing
+
+Library usage (pricing a single contract):
+
+```python
+import pandas as pd
+
+from fundie.ftr import ContractSpec, price_contract
+from fundie.ftr.config.settings import FTRSettings
+
+prices_df = pd.DataFrame(
+    {
+        "timestamp_utc": ["2024-01-01T00:00:00Z", "2024-01-01T00:00:00Z"],
+        "node": ["A", "B"],
+        "price": [45.0, 52.0],
+    }
+)
+spec = ContractSpec.from_dict(
+    {
+        "source": "A",
+        "sink": "B",
+        "start_utc": "2024-02-01T00:00:00Z",
+        "end_utc": "2024-03-01T00:00:00Z",
+        "mw": 10.0,
+        "contract_type": "obligation",
+    }
+)
+result = price_contract(spec, prices_df, curve=None, settings=FTRSettings())
+print(result.price)
+```
+
+CLI usage:
+
+```bash
+poetry run fundie ftr ingest --prices data/prices.csv --curve data/curve.csv
+poetry run fundie ftr price --prices data/prices.csv --source A --sink B --start 2024-02-01 --end 2024-03-01 --mw 10
+poetry run fundie ftr batch --specs data/ftr_specs.csv --prices data/prices.csv --curve data/curve.csv --output data/ftr_prices.csv
+```
+
+## How to run
+
+Install:
+
+```bash
+poetry install
+```
+
+Run CLI:
+
+```bash
+poetry run fundie ftr price --prices data/prices.csv --source A --sink B --start 2024-02-01 --end 2024-03-01 --mw 10
+```
+
+Run tests:
+
+```bash
+poetry run pytest -q
+```
