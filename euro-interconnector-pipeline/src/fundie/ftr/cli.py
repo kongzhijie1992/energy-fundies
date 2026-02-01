@@ -91,7 +91,11 @@ def price(
     start: str = typer.Option(..., "--start"),
     end: str = typer.Option(..., "--end"),
     mw: float = typer.Option(..., "--mw"),
-    contract_type: str = typer.Option("obligation", "--contract-type"),
+    contract_type: str = typer.Option(
+        "obligation",
+        "--contract-type",
+        help="Obligation only; EU FTRs do not include optionality.",
+    ),
     output: Path | None = typer.Option(None, "--output"),
     model: str = typer.Option("hs", "--model"),
     cache_dir: Path | None = typer.Option(None, "--cache-dir"),
@@ -113,6 +117,12 @@ def price(
     )
     prices_df = read_prices(prices)
     curve_df = read_curve(curve) if curve is not None else None
+    normalized_contract_type = contract_type.strip().lower()
+    if normalized_contract_type != "obligation":
+        raise typer.BadParameter(
+            "Only obligation-style FTRs are supported (optional-style FTRs are not available).",
+            param_hint="--contract-type",
+        )
     spec = ContractSpec.from_dict(
         {
             "source": source,
@@ -120,7 +130,7 @@ def price(
             "start_utc": start,
             "end_utc": end,
             "mw": mw,
-            "contract_type": contract_type,
+            "contract_type": normalized_contract_type,
         }
     )
     result = price_contract(spec, prices_df, curve_df, model=model, settings=settings)

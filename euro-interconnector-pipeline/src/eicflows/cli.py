@@ -52,7 +52,10 @@ def _default_data_dir() -> Path:
 
 
 def _load_env() -> None:
-    load_dotenv(override=False)
+    project_root = _project_root()
+    path = project_root.parent / ".env"
+    if path.exists():
+        load_dotenv(path, override=False)
 
 
 def _parse_range(start: str, end: str) -> DateTimeRange:

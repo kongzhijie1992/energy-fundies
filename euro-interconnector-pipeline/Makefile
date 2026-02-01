@@ -1,4 +1,4 @@
-.PHONY: install lint test backfill daily features qc dashboard
+.PHONY: install lint test backfill daily features qc dashboard api
 
 install:
 	poetry install
@@ -23,3 +23,6 @@ qc:
 
 dashboard:
 	poetry run streamlit run dashboard/app.py
+
+api:
+	poetry run uvicorn eicapi.main:app --reload --port 8000

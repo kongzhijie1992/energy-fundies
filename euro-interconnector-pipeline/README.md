@@ -9,7 +9,7 @@ Requirements: Python 3.11+
 ```bash
 cd euro-interconnector-pipeline
 poetry install
-cp .env.example .env
+cp .env.example ../.env
 ```
 
 Set your API key in your shell or `.env`:
@@ -120,7 +120,33 @@ poetry run streamlit run dashboard/app.py
 
 The dashboard reads from `data/clean/flows/` and `data/outputs/` and can compute net import / congestion proxy on-the-fly if outputs are missing.
 
+## API service (FastAPI + Snowflake)
+
+The API reads curated tables from Snowflake. This keeps the data pipeline separate from the serving layer: the pipeline writes to S3 → Snowflake; the API only queries Snowflake tables.
+
+Environment variables (see `.env.example`):
+
+- `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`, `SNOWFLAKE_PASSWORD`
+- `SNOWFLAKE_WAREHOUSE`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_SCHEMA`, `SNOWFLAKE_ROLE` (optional)
+- `SNOWFLAKE_TABLE_FLOWS`, `SNOWFLAKE_TABLE_NET_IMPORT`, `SNOWFLAKE_TABLE_CONGESTION`
+- `API_QUERY_LIMIT`, `API_DEFAULT_LOOKBACK_DAYS`
+
+Run locally:
+
+```bash
+make api
+```
+
+Example endpoints:
+
+- `GET /health`
+- `GET /flows?start=2024-01-01T00:00:00Z&end=2024-01-02T00:00:00Z&border_id=FR-GB`
+- `GET /net-import?start=2024-01-01T00:00:00Z&end=2024-01-08T00:00:00Z&zone=FR`
+- `GET /congestion?start=2024-01-01T00:00:00Z&end=2024-01-08T00:00:00Z&border_id=FR-GB`
+
 ## FTR Pricing
+
+Only obligation-style FTRs are supported; optionality is not available in EU FTRs.
 
 Library usage (pricing a single contract):
 

@@ -24,6 +24,10 @@ class ContractSpec:
     contract_type: ContractType = ContractType.obligation
     contract_id: str | None = None
 
+    def __post_init__(self) -> None:
+        if self.contract_type != ContractType.obligation:
+            raise ValueError("Only obligation-style FTRs are supported in this model.")
+
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "ContractSpec":
         start = parse_datetime_utc(data["start_utc"])
