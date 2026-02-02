@@ -13,6 +13,8 @@ pydantic = "^2.12.5"
 ipykernel = "^7.1.0"
 polars = "^1.37.1"
 pyarrow = "^23.0.0"
+scikit-learn = "^1.8.0"
+matplotlib = "^3.10.8"
 
 [build-system]
 requires = ["poetry-core>=2.0.0"]
